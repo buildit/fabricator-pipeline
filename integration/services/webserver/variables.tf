@@ -18,6 +18,7 @@ variable "server_port" {
 
 variable "cluster_name" {
   description = "The name to use for all the cluster resources"
+  default = "fabricator-pipeline"
 }
 
 variable "environment" {
@@ -30,4 +31,5 @@ variable "shared_credentials_file" {
 
 variable "aws_profile" {
   description = "AWS profile name referenced in the credentials file."
+  default = "fabricator-pipeline"
 }

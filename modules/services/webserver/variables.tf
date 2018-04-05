@@ -18,6 +18,7 @@ variable "server_port" {
 
 variable "cluster_name" {
   description = "The name to use for all the cluster resources"
+  default = "fabricator-pipeline"
 }
 
 variable "environment" {
