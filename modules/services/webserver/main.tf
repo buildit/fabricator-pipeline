@@ -1,24 +1,13 @@
 data "aws_availability_zones" "available" {}
 
-data "terraform_remote_state" "db" {
-  backend = "s3"
-
-  config {
-    bucket = "${var.db_remote_state_bucket}"
-    key    = "${var.db_remote_state_key}"
-    region = "${var.region}"
-  }
-}
-
 data "template_file" "user_data" {
   template = "${file("${path.module}/user-data.sh")}"
 
   vars {
     server_port = "${var.server_port}"
-    db_address  = "${data.terraform_remote_state.db.address}"
-    db_port     = "${data.terraform_remote_state.db.port}"
   }
 }
+
 resource "aws_vpc" "vpc" {
   cidr_block           = "${var.vpc_cidr_block}"
   enable_dns_hostnames = true
