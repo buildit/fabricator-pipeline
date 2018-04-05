@@ -45,14 +45,16 @@ cd <project_root_dir>
 
 where 'project_root_dir' is the directory where you checked this source out to.
 
-Then edit the root Terragrunt configuration file named 'terraform.tfvars' and change the following values:
+If you want to setup your own pipeline, then edit the root Terragrunt configuration file named 'terraform.tfvars' and change the following values:
 
 * bucket - This value needs to be globally unique name.
+  * Default: rig.fabricator-pipeline.us-west-2
 * region - Even though the S3 buckets are global and not regional specific, you still have to supply a AWS region. Weird I know.
+  * Default: us-west-2
 * dynamodb_table - A unique table name that will be used to store the lock when making changes to remote state.
-* profile - A local AWS CLI profile name in the AWS credentials file.
-
-The current values for the above a sure not to be unique nor correct, so please make sure to change them all.
+  * Default: fabricator-pipeline-lock-file.
+* profile - A local AWS CLI profile name in your AWS credentials file.
+  * Default: fabricator-pipeline
 
 ### 1.2 Setup S3 Bucket to Store Remote State
 ```
@@ -72,10 +74,33 @@ You will be prompted to supply some input values.
 * var.shared_credentials_file - Absolute path the AWS credentials file.
   * Provide an absolute path to the AWS credentials file on your local workstation.
 * var.state_lock_table - Name of state lock table used for remote state management.
-  * Enter value: global/s3/terraform.tfstate
+  * Enter value: fabricator-pipeline-lock-table
 
 If all goes well (no errors), you will be asked to confirm changes before it creates the S3 bucket. You need to enter 'yes' to proceed.
 
 If this finishes successfully, you will see the ARN name of the S3 bucket in the output.
 
 You can verify the S3 bucket by logging into the AWS console for digital-rig, going to the S3 console and then filtering by the bucket name. Inside the bucket should be folders for global and then s3 and in the s3 folder, you will see the terraform.tfstate file.
+
+### 2. Setup Environment Infrastructure
+
+You now need to build each environments infrastructure.
+
+### 2.1 Verify Integration Environment
+```
+cd <project_root_dir>/integration/services/webserver
+terragrunt plan
+```
+
+* var.environment - int
+* var.public_subnet_cidr_block - 10.1.1.0/24
+* var.shared_credentials_file - Absolute path the AWS credentials file.
+  * Provide an absolute path to the AWS credentials file on your local workstation.
+* var.vpc_cidr_block - 10.1.0.0/16
+
+If all is ok, proceed to the next step.
+
+### 2.2 Build Integration Environment
+```
+terragrunt apply
+```
