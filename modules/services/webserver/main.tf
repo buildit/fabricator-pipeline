@@ -133,21 +133,6 @@ resource "aws_lb" "app_load_balancer" {
 
   enable_deletion_protection = false
 
-  listener {
-    lb_port           = 80
-    lb_protocol       = "http"
-    instance_port     = "${var.server_port}"
-    instance_protocol = "http"
-  }
-
-  health_check {
-    healthy_threshold   = 1
-    unhealthy_threshold = 1
-    timeout             = 3
-    interval            = 30
-    target              = "HTTP:${var.server_port}/"
-  }
-
   tags {
     "Name"        = "${var.cluster_name}-${var.environment}-lb"
     "Environment" = "${var.environment}"
