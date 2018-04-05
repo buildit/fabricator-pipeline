@@ -7,7 +7,7 @@ terragrunt = {
       region         = "us-west-2"
       encrypt        = true
       dynamodb_table = "fabricator-pipeline-lock-table"
-      profile        = "digital-rig-hap-terraform"
+      profile        = "fabricator-pipeline"
     }
   }
 }
