@@ -21,7 +21,7 @@ variable "cluster_name" {
 }
 
 variable "environment" {
-  description = "Either integration, staging or production"
+  description = "Either int, stg or prd"
 }
 
 variable "db_remote_state_bucket" {
