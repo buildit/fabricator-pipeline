@@ -20,14 +20,35 @@ resource "aws_vpc" "vpc" {
   }
 }
 
-resource "aws_subnet" "subnet_public" {
+resource "aws_subnet" "subnet_public_a" {
   vpc_id                  = "${aws_vpc.vpc.id}"
-  cidr_block              = "${var.public_subnet_cidr_block}"
+  cidr_block              = "${var.public_subnet_a_cidr_block}"
   availability_zone       = "${data.aws_availability_zones.available.names[0]}"
   map_public_ip_on_launch = true
 
   tags {
-    "Name"        = "${var.cluster_name}-${var.environment}-subnet-public"
+    "Name"        = "${var.cluster_name}-${var.environment}-subnet-public-a"
+    "Environment" = "${var.environment}"
+  }
+}
+
+resource "aws_subnet" "subnet_public_b" {
+  vpc_id                  = "${aws_vpc.vpc.id}"
+  cidr_block              = "${var.public_subnet_b_cidr_block}"
+  availability_zone       = "${data.aws_availability_zones.available.names[1]}"
+  map_public_ip_on_launch = true
+
+  tags {
+    "Name"        = "${var.cluster_name}-${var.environment}-subnet-public-b"
+    "Environment" = "${var.environment}"
+  }
+}
+
+resource "aws_internet_gateway" "internet_gateway" {
+  vpc_id = "${aws_vpc.vpc.id}"
+
+  tags {
+    "Name"        = "${var.cluster_name}-${var.environment}-internet-gateway"
     "Environment" = "${var.environment}"
   }
 }
@@ -59,6 +80,7 @@ resource "aws_security_group_rule" "allow_webserver_inbound" {
 resource "aws_security_group" "lb-sg" {
   description = "Security group for the load balancer"
   name        = "${var.cluster_name}-${var.environment}-lb-sg"
+  vpc_id      = "${aws_vpc.vpc.id}"
 
   tags {
     "Name"        = "${var.cluster_name}-${var.environment}-lb-sg"
@@ -118,7 +140,7 @@ resource "aws_lb" "app_load_balancer" {
   name            = "${var.cluster_name}-${var.environment}-lb"
   internal        = false
   security_groups = ["${aws_security_group.lb-sg.id}"]
-  subnets         = ["${aws_subnet.subnet_public.id}"]
+  subnets         = ["${aws_subnet.subnet_public_a.id}","${aws_subnet.subnet_public_b.id}"]
 
   enable_deletion_protection = false
 

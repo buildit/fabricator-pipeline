@@ -7,8 +7,12 @@ variable "vpc_cidr_block" {
   description = "VPC CIDR block (i.e. 0.0.0.0/0)"
 }
 
-variable "public_subnet_cidr_block" {
-  description = "Public Subnet CIDR block (i.e. 0.0.0.0/0)"
+variable "public_subnet_a_cidr_block" {
+  description = "Public Subnet A CIDR block (i.e. 0.0.0.0/0)"
+}
+
+variable "public_subnet_b_cidr_block" {
+  description = "Public Subnet B CIDR block (i.e. 0.0.0.0/0)"
 }
 
 variable "server_port" {
