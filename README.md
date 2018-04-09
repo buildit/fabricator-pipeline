@@ -3,10 +3,18 @@ This projects purpose is to provide a pipeline for a [Fabricator](http://fbrctr.
 The current foundation has the following resources/characteristics:
 
 * 1 - VPC
+* 1 - Internet Gateway
 * 1 - Public Subnet
-* 1 - Autoscaling Group
-* 1 - Load Balancer
-* 2 - Security Groups (one for LB and one for web server)
+* 1 - Custom Route Table
+* 1 - Custom Route (for internet access)
+* 1 - Route Association (public subnet to custom route table)
+* 1 - Security Groups (for web server)
+* 3 - Security Group Rules
+  * HTTP inbound (any IP)
+  * SSH inbound (specific IP)
+  * Anything outbound
+* 1 - EC2 instance
+* 1 - Elastic IP
 
 ## Pre-build Requirements
 
@@ -84,19 +92,24 @@ You can verify the S3 bucket by logging into the AWS console for digital-rig, go
 
 ### 2. Setup Environment Infrastructure
 
-You now need to build each environments infrastructure.
+Next you need to create all the Infrastructure (networking, routes, security, instance, etc...). This project creates a new VPC so everything is isolated and self contained.
 
 ### 2.1 Verify Integration Environment
+
+You need to know your IP. You can get that IP address at [CheckIP](http://checkip.amazonaws.com). Once you have your IP, you need to build the infrastructure.
+
 ```
 cd <project_root_dir>/integration/services/webserver
 terragrunt plan
 ```
 
-* var.environment - int
-* var.public_subnet_cidr_block - 10.1.1.0/24
-* var.shared_credentials_file - Absolute path the AWS credentials file.
-  * Provide an absolute path to the AWS credentials file on your local workstation.
-* var.vpc_cidr_block - 10.1.0.0/16
+You will be prompted for the following information:
+* Key pair name
+  * Enter: <valid key pair name from region>
+* Absolute path the AWS credentials file.
+  * Provide an absolute path to the AWS credentials file on your local workstation
+* SSH IP CIDR
+  * Enter: <ip address from ckeckip>/32 or any other valid CIDR
 
 If all is ok, proceed to the next step.
 

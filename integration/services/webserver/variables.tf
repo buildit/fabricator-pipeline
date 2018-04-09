@@ -8,21 +8,6 @@ variable "vpc_cidr_block" {
   default = "10.1.0.0/16"
 }
 
-variable "public_subnet_a_cidr_block" {
-  description = "Public Subnet A CIDR block (i.e. 0.0.0.0/0)"
-  default = "10.1.1.0/24"
-}
-
-variable "public_subnet_b_cidr_block" {
-  description = "Public Subnet B CIDR block (i.e. 0.0.0.0/0)"
-  default = "10.1.2.0/24"
-}
-
-variable "server_port" {
-  description = "The port the server will use for HTTP requests"
-  default = 8080
-}
-
 variable "cluster_name" {
   description = "The name to use for all the cluster resources"
   default = "fabricator-pipeline"
@@ -30,6 +15,7 @@ variable "cluster_name" {
 
 variable "environment" {
   description = "Either int, stg or prd"
+  default = "int"
 }
 
 variable "shared_credentials_file" {
@@ -39,4 +25,17 @@ variable "shared_credentials_file" {
 variable "aws_profile" {
   description = "AWS profile name referenced in the credentials file."
   default = "fabricator-pipeline"
+}
+
+variable "public_subnet_cidr_block" {
+  description = "Public Subnet CIDR block (i.e. 0.0.0.0/0)"
+  default = "10.1.1.0/24"
+}
+
+variable "ssh_cidr_block" {
+  description = "SSH CIDR block (i.e. 0.0.0.0/0)"
+}
+
+variable "key_pair_name" {
+  description = "Existing key pair name in same region as the EC2 instance"
 }

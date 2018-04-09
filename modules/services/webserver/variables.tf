@@ -7,19 +7,6 @@ variable "vpc_cidr_block" {
   description = "VPC CIDR block (i.e. 0.0.0.0/0)"
 }
 
-variable "public_subnet_a_cidr_block" {
-  description = "Public Subnet A CIDR block (i.e. 0.0.0.0/0)"
-}
-
-variable "public_subnet_b_cidr_block" {
-  description = "Public Subnet B CIDR block (i.e. 0.0.0.0/0)"
-}
-
-variable "server_port" {
-  description = "The port the server will use for HTTP requests"
-  default = 8080
-}
-
 variable "cluster_name" {
   description = "The name to use for all the cluster resources"
   default = "fabricator-pipeline"
@@ -29,16 +16,20 @@ variable "environment" {
   description = "Either int, stg or prd"
 }
 
+variable "public_subnet_cidr_block" {
+  description = "Public Subnet CIDR block (i.e. 0.0.0.0/0)"
+}
+
+variable "ssh_cidr_block" {
+  description = "SSH CIDR block (i.e. 0.0.0.0/0)"
+}
+
+variable "key_pair_name" {
+  description = "Existing key pair name in same region as the EC2 instance"
+}
+
 variable "instance_type" {
   description = "The type of EC2 instances to run (e.g. t2.micro)"
-}
-
-variable "min_size" {
-  description = "The minimum number of EC2 instances in the AGS"
-}
-
-variable "max_size" {
-  description = "The maximum number of EC2 instances in the AGS"
 }
 
 variable "region_to_ami" {
