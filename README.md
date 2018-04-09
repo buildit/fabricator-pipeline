@@ -117,3 +117,16 @@ If all is ok, proceed to the next step.
 ```
 terragrunt apply
 ```
+
+### 3. Setup Nginx
+
+Next you need to configure an nginx web server on the ec2 instance. This project is using Ansible for configuration management.
+
+### 3.1 Run configuration
+
+```
+cd <project_root_dir>/ansible/playbook
+ansible-playbook web-notls.yml
+```
+
+where 'project_root_dir' is the directory where you checked this source out to.
