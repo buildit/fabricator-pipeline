@@ -32,6 +32,11 @@ variable "public_subnet_cidr_block" {
   default = "10.1.1.0/24"
 }
 
+variable "private_subnet_cidr_block" {
+  description = "Private Subnet CIDR block (i.e. 0.0.0.0/0)"
+  default = "10.1.2.0/24"
+}
+
 variable "ssh_cidr_block" {
   description = "SSH CIDR block (i.e. 0.0.0.0/0)"
 }
