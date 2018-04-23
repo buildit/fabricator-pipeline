@@ -9,7 +9,6 @@ variable "vpc_cidr_block" {
 
 variable "cluster_name" {
   description = "The name to use for all the cluster resources"
-  default = "fabricator-pipeline"
 }
 
 variable "environment" {
@@ -18,6 +17,10 @@ variable "environment" {
 
 variable "public_subnet_cidr_block" {
   description = "Public Subnet CIDR block (i.e. 0.0.0.0/0)"
+}
+
+variable "private_subnet_cidr_block" {
+  description = "Private Subnet CIDR block (i.e. 0.0.0.0/0)"
 }
 
 variable "ssh_cidr_block" {

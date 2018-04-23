@@ -48,10 +48,52 @@ data "aws_availability_zones" "available" {}
     gateway_id             = "${aws_internet_gateway.internet_gateway.id}"
   }
 
-  # Associate subnet public subnet to custom route table
+  # Associate public subnet to custom route table
   resource "aws_route_table_association" "subnet_public_association" {
     subnet_id      = "${aws_subnet.subnet_public.id}"
     route_table_id = "${aws_route_table.custom_route_table.id}"
+  }
+
+  resource "aws_subnet" "subnet_private" {
+    vpc_id                  = "${aws_vpc.vpc.id}"
+    cidr_block              = "${var.private_subnet_cidr_block}"
+    availability_zone       = "${data.aws_availability_zones.available.names[0]}"
+
+    tags {
+      "Name"        = "${var.cluster_name}-${var.environment}-subnet-private"
+      "Environment" = "${var.environment}"
+    }
+  }
+
+  resource "aws_route_table" "private_route_table" {
+    vpc_id = "${aws_vpc.vpc.id}"
+
+    tags {
+      "Name"        = "${var.cluster_name}-${var.environment}-private-route-table"
+      "Environment" = "${var.environment}"
+    }
+  }
+
+  # Associate private subnet to private route table
+  resource "aws_route_table_association" "subnet_private_association" {
+    subnet_id      = "${aws_subnet.subnet_private.id}"
+    route_table_id = "${aws_route_table.private_route_table.id}"
+  }
+
+  resource "aws_eip" "gateway_eip" {
+    vpc      = true
+    depends_on = ["aws_internet_gateway.internet_gateway"]
+  }
+
+  resource "aws_nat_gateway" "nat-gateway" {
+    subnet_id = "${aws_subnet.subnet_public.id}"
+    allocation_id = "${aws_eip.gateway_eip.id}"
+  }
+
+  resource "aws_route" "nat-gateway-access" {
+    route_table_id         = "${aws_route_table.private_route_table.id}"
+    destination_cidr_block = "0.0.0.0/0"
+    gateway_id             = "${aws_nat_gateway.nat-gateway.id}"
   }
 
   resource "aws_security_group" "webserver-sg" {
@@ -87,6 +129,17 @@ data "aws_availability_zones" "available" {}
     to_port           = 22
     protocol          = "tcp"
     cidr_blocks       = ["${var.ssh_cidr_block}"]
+
+    security_group_id = "${aws_security_group.webserver-sg.id}"
+  }
+
+  resource "aws_security_group_rule" "allow_codebuild_ssh_inbound" {
+    description       = "Security group ingress rule to allow a CodeBuild container IPs inbound traffic to the web server on port 22."
+    type              = "ingress"
+    from_port         = 22
+    to_port           = 22
+    protocol          = "tcp"
+    cidr_blocks       = ["${var.private_subnet_cidr_block}"]
 
     security_group_id = "${aws_security_group.webserver-sg.id}"
   }
