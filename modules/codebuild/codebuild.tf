@@ -46,16 +46,31 @@ resource "aws_iam_policy" "codebuild_policy" {
         "s3:CreateBucket",
         "s3:GetObject",
         "s3:List*",
-        "s3:PutObject"
+        "s3:PutObject",
+        "kms:Encrypt",
+        "kms:Decrypt",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*",
+        "kms:DescribeKey"
       ]
     },
     {
-       "Effect": "Allow",
-       "Action": [
-         "s3:GetObject"
-       ],
-       "Resource": ["arn:aws:s3:::fabaricator-support/*"]
-     }
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:s3:::fabricator-support/*"
+      ],
+      "Action": [
+        "s3:CreateBucket",
+        "s3:GetObject",
+        "s3:List*",
+        "s3:PutObject",
+        "kms:Encrypt",
+        "kms:Decrypt",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*",
+        "kms:DescribeKey"
+      ]
+    }
   ]
 }
 POLICY
