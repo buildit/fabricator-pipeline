@@ -31,5 +31,5 @@ output "vpc_private_subnet_id" {
 }
 
 output "webserver_public_ip" {
-  value = "${aws_instance.web-server.public_ip}"
+  value = "${aws_eip.webserver-eip.public_ip}"
 }

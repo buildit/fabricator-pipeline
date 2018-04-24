@@ -4,7 +4,7 @@ variable "pipeline_name" {
 }
 
 variable "codepipeline_bucket" {
-  description = "2The name of the S3 bucket to store the pipeline artifacts"
+  description = "The name of the S3 bucket to store the pipeline artifacts"
 }
 
 variable "git_owner" {

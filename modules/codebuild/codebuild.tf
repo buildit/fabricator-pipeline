@@ -57,6 +57,7 @@ resource "aws_iam_policy" "codebuild_policy" {
     {
       "Effect": "Allow",
       "Resource": [
+        "arn:aws:s3:::fabricator-support/",
         "arn:aws:s3:::fabricator-support/*"
       ],
       "Action": [
@@ -101,6 +102,11 @@ resource "aws_codebuild_project" "codebuild-project" {
     environment_variable {
       "name"  = "WEB_SERVER_IP"
       "value" = "${var.web_server_ip}"
+    }
+
+    environment_variable {
+      "name"  = "AWS_REGION"
+      "value" = "${var.region}"
     }
   }
 

@@ -22,6 +22,7 @@ module "webserver" {
 
 module "codebuild" {
   source                    = "../../../modules/codebuild"
+  region                    = "${var.region}"
   project_name              = "${var.cluster_name}"
   web_server_ip             = "${module.webserver.web_server_ip}"
   VPC_ID                    = "${module.webserver.vpc_id}"

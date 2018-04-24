@@ -1,3 +1,7 @@
+variable "region" {
+  description = "The aws region from which everything will be based on."
+}
+
 variable "project_name" {
   description = "The name of the codebuild project"
   default = "fabricator"
