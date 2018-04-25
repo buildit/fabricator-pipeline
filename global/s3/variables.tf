@@ -4,8 +4,8 @@ variable "region" {
 }
 
 variable "bucket_name" {
-  description = "1The name of the S3 bucket used to store terraform state. Must be globally unique."
-  default = "km1.fabricator-pipeline.us-west-2"
+  description = "The name of the S3 bucket used to store terraform state. Must be globally unique."
+  default = "rig.fabricator-pipeline.us-west-2"
 }
 
 variable "shared_credentials_file" {
@@ -20,5 +20,5 @@ variable "aws_profile" {
 
 variable "state_lock_table" {
   description = "Name of state lock table used for remote state management."
-  default = "km.fabricator-pipeline-lock-table"
+  default = "fabricator-pipeline-lock-table"
 }
