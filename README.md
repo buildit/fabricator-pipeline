@@ -166,7 +166,10 @@ You will be prompted for the following information which is environment and depl
   * Name of the Git repo from which to pull code and deploy to the web server
 * Git Auth Token
   * Auth token you created in Pre-build Requirements
-  
+* SSH Key Bucket Name
+  * Name of the S3 Key Pair bucket you created above in the Pre-build Requirements  
+* SSH Key File Name
+  * Name of the .pem key file name 
 
 If all is ok, proceed to the next step.
 

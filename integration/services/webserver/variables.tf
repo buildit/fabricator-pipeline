@@ -64,3 +64,11 @@ variable "git_oauth_token" {
   description = "The Git OAuth token used to conect to the repo"
 }
 
+variable "ssh_key_bucket" {
+  description = "The name of the S3 bucket which has the encrypted ssh key to access web server EC2 instance"
+}
+
+variable "ssh_key_filename" {
+  description = "The name of the SSH key file"
+  default = "key.pem"
+}

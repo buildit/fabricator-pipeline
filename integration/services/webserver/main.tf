@@ -22,12 +22,13 @@ module "webserver" {
 
 module "codebuild" {
   source                    = "../../../modules/codebuild"
-  region                    = "${var.region}"
   project_name              = "${var.cluster_name}"
   web_server_ip             = "${module.webserver.web_server_ip}"
   VPC_ID                    = "${module.webserver.vpc_id}"
   VPC_Private_Subnet_ID     = "${module.webserver.vpc_private_subnet_id}"
   VPC_Security_Group_ID     = "${module.webserver.vpc_security_group_id}"
+  ssh_key_bucket            = "${var.ssh_key_bucket}"
+  ssh_key_filename          = "${var.ssh_key_filename}"
 }
 
 module "codepipeline" {

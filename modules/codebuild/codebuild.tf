@@ -105,8 +105,13 @@ resource "aws_codebuild_project" "codebuild-project" {
     }
 
     environment_variable {
-      "name"  = "AWS_REGION"
-      "value" = "${var.region}"
+      "name"  = "SSH_KEY_S3_BUCKET"
+      "value" = "${var.ssh_key_bucket}"
+    }
+
+    environment_variable {
+      "name"  = "SSH_KEY_FILE"
+      "value" = "${var.ssh_key_filename}"
     }
   }
 

@@ -1,10 +1,5 @@
-variable "region" {
-  description = "The aws region from which everything will be based on."
-}
-
 variable "project_name" {
   description = "The name of the codebuild project"
-  default = "fabricator"
 }
 
 variable "web_server_ip" {
@@ -21,4 +16,12 @@ variable "VPC_Private_Subnet_ID" {
 
 variable "VPC_Security_Group_ID" {
   description = "The ID of the attached security group for the VPC"
+}
+
+variable "ssh_key_bucket" {
+  description = "The name of the S3 bucket which has the encrypted ssh keys to access internal EC2 instance"
+}
+
+variable "ssh_key_filename" {
+  description = "The name of the SSH key file"
 }
