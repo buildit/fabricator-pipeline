@@ -111,7 +111,7 @@ resource "aws_codebuild_project" "codebuild-project" {
   }
 
   source {
-    type     = "CODEPIPELINE"
+    type = "CODEPIPELINE"
   }
 
   vpc_config {
