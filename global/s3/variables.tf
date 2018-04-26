@@ -10,7 +10,6 @@ variable "bucket_name" {
 
 variable "shared_credentials_file" {
   description = "Absolute path the AWS credentials file."
-  default = "/Users/kashifmasood/.aws/credentials"
 }
 
 variable "aws_profile" {
