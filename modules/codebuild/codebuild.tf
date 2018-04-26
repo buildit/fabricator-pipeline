@@ -43,15 +43,10 @@ resource "aws_iam_policy" "codebuild_policy" {
         "ec2:DescribeSubnets",
         "ec2:DescribeSecurityGroups",
         "ec2:DescribeVpcs",
-        "s3:CreateBucket",
         "s3:GetObject",
-        "s3:List*",
         "s3:PutObject",
-        "kms:Encrypt",
-        "kms:Decrypt",
-        "kms:ReEncrypt*",
-        "kms:GenerateDataKey*",
-        "kms:DescribeKey"
+        "s3:List*",
+        "kms:Decrypt"
       ]
     },
     {
@@ -117,14 +112,6 @@ resource "aws_codebuild_project" "codebuild-project" {
 
   source {
     type     = "CODEPIPELINE"
-
-//    type     = "GITHUB"
-//    location = "https://github.com/buildit/fabricator-assets.git"
-
-    // Make sure to add instructions to manually connect aws with github (via the web ui) prior to running this script
-//    auth {
-//      type = "OAUTH"
-//    }
   }
 
   vpc_config {
