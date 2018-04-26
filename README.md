@@ -80,6 +80,18 @@ In order for CodeBuild to deploy the artifacts to the web server automatically, 
 * Add the SSH key file (.pem) with the following name:
   * **key.pem**
 
+### Project Build Specification
+
+The Codebuild service will utilize the **buildspec.yml** file to build, package, and deploy the target application.
+
+Please ensure that the *buildspec.yml* is configured and available in the project root directory of your target Git project.
+
+The following environment variables are made available to the Codebuild container which can be used in the buildspec.yml as needed:
+
+* WEB_SERVER_IP : The **private** IP address of the EC2 web server
+* SSH_KEY_S3_BUCKET : The name of the S3 bucket where SSH key file is stored
+* SSH_KEY_FILE : The name of the encrypted SSH key file which can be used to SSH in to the EC2 web server 
+
 ## Build
 
 ### 1. Setup Remote State Management
@@ -225,4 +237,5 @@ where 'project_root_dir' is the directory where you checked this source out to.
 
 ### 4. Run the Codepipeline to deploy the latest code
 
-Now that nginx server is installed and configured, run the CI/CD pipeline again in AWS to push the latest code successfully to the web server. After the deployment is complete, you should see your deployment by going to the public IP address of your web server in a browser.  
+Now that nginx server is installed and configured, run the CI/CD pipeline again in AWS to push the latest code successfully to the web server. After the deployment is complete, you should see your deployment by going to the public IP address of your web server in a browser.
+  
