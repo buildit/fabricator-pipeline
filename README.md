@@ -201,7 +201,13 @@ Next you need to configure an nginx web server on the ec2 instance. This project
 
 ### 3.1 Setup configuration
 
-Update the ansible configuration files as follows:
+There are two sample configuration files in the <project_root_dir>/ansible/playbook folder:
+  * ancible.cfg.example
+  * hosts.example
+
+Make a copy the above files without the ".example" extension, i.e. "ancible.cfg" and "hosts"
+
+Make the following changes in the configuration files:
 
 * **<project_root_dir>/ansible/playbook/ansible.cfg**
   * *private_key_file* = Absolute path of the SSH key pair file you downloaded above in the Pre-build Requirements
