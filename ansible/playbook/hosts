@@ -1,3 +1,0 @@
-[webservers]
-int-web-server ansible_ssh_host=54.190.252.79 ansible_ssh_port=22
-stg-web-server ansible_ssh_host=50.112.235.194 ansible_ssh_port=22
